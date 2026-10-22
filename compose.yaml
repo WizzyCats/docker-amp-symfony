@@ -1,4 +1,4 @@
-name: project-name
+name: music-library
 
 services:
   ###> doctrine/doctrine-bundle ###
