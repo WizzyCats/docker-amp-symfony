@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Enum\ReleaseType;
 use App\Repository\ReleaseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReleaseRepository::class)]
+#[ORM\Table(name:'`release`')]
 class Release
 {
     #[ORM\Id]
@@ -15,15 +19,17 @@ class Release
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $type = null;
+    #[ORM\Column(enumType: ReleaseType::class)]
+    private ?ReleaseType $type = null;
 
+    #[Assert\Length(max:255)]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $releasedAt = null;
 
+    #[Assert\Url()]
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $thumbnail = null;
 
@@ -47,12 +53,12 @@ class Release
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getType(): ?ReleaseType
     {
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(ReleaseType $type): static
     {
         $this->type = $type;
 
