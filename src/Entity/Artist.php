@@ -24,7 +24,7 @@ class Artist
     private ?string $bio = null;
 
     #[Assert\Url()]
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $thumbnail = null;
 
     /**

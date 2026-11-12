@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReleaseRepository::class)]
-#[ORM\Table(name:'`release`')]
+#[ORM\Table(name: '`release`')]
 class Release
 {
     #[ORM\Id]
@@ -22,7 +22,7 @@ class Release
     #[ORM\Column(enumType: ReleaseType::class)]
     private ?ReleaseType $type = null;
 
-    #[Assert\Length(max:255)]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -30,7 +30,7 @@ class Release
     private ?\DateTimeImmutable $releasedAt = null;
 
     #[Assert\Url()]
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $thumbnail = null;
 
     /**
@@ -94,7 +94,7 @@ class Release
         return $this->thumbnail;
     }
 
-    public function setThumbnail(?string $thumbnail): static
+    public function setThumbnail(string $thumbnail): static
     {
         $this->thumbnail = $thumbnail;
 

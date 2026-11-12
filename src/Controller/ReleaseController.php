@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ReleaseController extends AbstractController
 {
-    #[Route(path:'/release', name: 'app_release_index', methods: ['GET'])]
+    #[Route('/release', name: 'app_release_index', methods: ['GET'])]
     public function index(ReleaseRepository $releaseRepository): Response
     {
         return $this->render('release/index.html.twig', [
@@ -22,11 +22,11 @@ final class ReleaseController extends AbstractController
         ]);
     }
 
-    #[Route(path:'/artist/{id}/release/new', name: 'app_artist_release_new', methods: ['GET', 'POST'])]
+    #[Route('/artist/{id}/release/new', name: 'app_artist_release_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Artist $artist): Response
     {
         $release = new Release();
-        $release->setArtist(artist: $artist);
+        $release->setArtist($artist);
         $form = $this->createForm(ReleaseType::class, $release);
         $form->handleRequest($request);
 
@@ -44,7 +44,7 @@ final class ReleaseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_release_show', methods: ['GET'])]
+    #[Route('/release/{id}', name: 'app_release_show', methods: ['GET'])]
     public function show(Release $release): Response
     {
         return $this->render('release/show.html.twig', [
@@ -52,7 +52,7 @@ final class ReleaseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_release_edit', methods: ['GET', 'POST'])]
+    #[Route('/release/{id}/edit', name: 'app_release_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Release $release, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ReleaseType::class, $release);
@@ -70,7 +70,7 @@ final class ReleaseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_release_delete', methods: ['POST'])]
+    #[Route('/release/{id}', name: 'app_release_delete', methods: ['POST'])]
     public function delete(Request $request, Release $release, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$release->getId(), $request->getPayload()->getString('_token'))) {
